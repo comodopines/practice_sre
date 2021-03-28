@@ -30,7 +30,13 @@ my_dict[some_key] = my_dict.get(some_key, 0) + 1
 #Let's say if you had a list
 my_dict = {}
 my_dict[some_key] = my_dict.get(some_key, []).append(some_value_to_list)  
+#wrong
 
+#Using try catch
+try:
+    dict[key] += 1
+except KeyError:
+    dict[key] = 1
 
 
 #Using not in

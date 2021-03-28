@@ -1,101 +1,34 @@
 #Create a dictionary
 d1 = {'a':5, 'b':4, 'e':1, 'd':2, 'c':3}
 
-#Print dictionary sorted by keys
-for item in sorted(d1.items()):
-  print(item)
+#Update an element in dictionary
+d1['a'] = 10
 
-'''
-('a', 5)
-('b', 4)
-('c', 3)
-('d', 2)
-('e', 1)
-'''
+#Find a key in dictionary
+if 'x' in d1.keys():
+  print(d1['x'])
+  
+if 'x' in d1:
+  print(d1['x'])
 
-
-#print dictionary sorted by keys method 2 (my preference)
-for item in sorted(d1.items(), key=lambda kv:kv[0]):
-  print(item)
-
-'''
-('a', 5)
-('b', 4)
-('c', 3)
-('d', 2)
-('e', 1)
-'''
-
-#method 2 now gives us a way to sort based on values too
-for item in sorted(d1.items(), key=lambda kv:kv[1]):
-  print(item)
+#Python 3
+if d1.has_key('x'):
+  print(d1['x'])
  
-'''
-('e', 1)
-('d', 2)
-('c', 3)
-('b', 4)
-('a', 5)
-'''
+#Setting/Initalizing if a key is missing
+#Using in
+if 'x' in d1.keys():
+  pass
+else:
+  d1['x']=23
 
-#Couple it with reverse=True and now you have a complete way of sorting a dictionary (Java hashmap) with either value or key, reverse or not
-print('Sorting on keys ascending [reverse=False is default]')
-for item in sorted(d1.items(), key=lambda kv:kv[0], reverse=False):
-  print(item)
+#Using not in
+if 'x' not in d1.keys():
+  d1['x']=23
+  
+#Setting using set default
+#https://stackoverflow.com/a/42315120
+d1.setdefault('x', 23)
+#if 'x' is present the present value is returned, else 23 is assigned and returned
 
-print('Sorting on keys descending [reverse=False is default]')
-for item in sorted(d1.items(), key=lambda kv:kv[0], reverse=True):
-  print(item)
 
-'''
-Sorting on keys ascending [false is default]
-('a', 5)
-('b', 4)
-('c', 3)
-('d', 2)
-('e', 1)
-Sorting on keys descending [false is default]
-('e', 1)
-('d', 2)
-('c', 3)
-('b', 4)
-('a', 5)
-'''
-
-#Sorting on the values
-print('Sorting on values ascending [reverse=False is default]')
-for item in sorted(d1.items(), key=lambda kv:kv[1], reverse=False):
-  print(item)
-
-print('Sorting on values descending [reverse=False is default]')
-for item in sorted(d1.items(), key=lambda kv:kv[1], reverse=True):
-  print(item)
-
-'''
-Sorting on values ascending [reverse=False is default]
-('e', 1)
-('d', 2)
-('c', 3)
-('b', 4)
-('a', 5)
-Sorting on values descending [reverse=False is default]
-('a', 5)
-('b', 4)
-('c', 3)
-('d', 2)
-('e', 1)
-'''
-
-#Lets see how it works with dictionary of lists
-
-d2 = {'a':[5,2], 'b':[4,3], 'e':[1,3], 'd':[2,5], 'c':[3,2]}
-for item in sorted(d2.items(), key=lambda kv:kv[1], reverse=False):
-  print(item)
-
-'''
-('e', [1, 3])
-('d', [2, 5])
-('c', [3, 2])
-('b', [4, 3])
-('a', [5, 2])
-'''

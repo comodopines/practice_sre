@@ -21,6 +21,17 @@ if 'x' in d1.keys():
   pass
 else:
   d1['x']=23
+  
+# Best way to initalize and increment if you are making frequency dictionary
+#https://stackoverflow.com/a/473344
+my_dict = {}
+my_dict[some_key] = my_dict.get(some_key, 0) + 1  
+
+#Let's say if you had a list
+my_dict = {}
+my_dict[some_key] = my_dict.get(some_key, []).append(some_value_to_list)  
+
+
 
 #Using not in
 if 'x' not in d1.keys():

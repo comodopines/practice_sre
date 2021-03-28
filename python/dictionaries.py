@@ -29,8 +29,10 @@ my_dict[some_key] = my_dict.get(some_key, 0) + 1
 
 #Let's say if you had a list
 my_dict = {}
-my_dict[some_key] = my_dict.get(some_key, []).append(some_value_to_list)  
 #wrong
+my_dict[some_key] = my_dict.get(some_key, []).append(some_value_to_list)  
+#wrong as after putting default value None will be assigned to my_dict[key]
+my_dict[key] = my_dict[key].append(some_value) if key in my_dict else [some_value]
 
 #Using try catch
 try:

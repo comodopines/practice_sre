@@ -1,0 +1,81 @@
+#What is a shell built in command
+A shell built in command is something which is part of shell. 
+As you might suspect, because built-ins are shell-specific, they won't be supplied with man pages. 
+Ask man to help with bg and you'll see something like this:
+
+$  man bg
+No manual entry for bg
+
+------------------------------------------------
+#Can a command be shell built in and executable.
+Yes, echo. /usr/bin/echo versus echo
+
+------------------------------------------------
+#What is $#, $*
+$# is the number of arguments, but remember it will be different in a function.
+$* is the string of all aruments
+
+#!/bin/bash
+
+echo 'printing args to script: args -> '$#
+
+function a(){
+echo "inside function a, args will always be 1"
+echo "args -> " $#
+}
+
+a 1
+
+https://askubuntu.com/a/939717
+#!/bin/sh
+
+while [ "$#"  -ne 0 ]; do
+    printf '%d argument(s) remaining.\nGot "%s".\n\n' "$#" "$1"
+    shift
+done
+$ ./do-shift foo bar baz      # I named the script do-shift.
+3 argument(s) remaining.
+Got "foo".
+
+2 argument(s) remaining.
+Got "bar".
+
+1 argument(s) remaining.
+Got "baz".
+They can also be changed with the set builtin:
+
+#!/bin/sh
+
+printf '%d args: %s\n' "$#" "$*"
+set foo bar baz
+printf '%d args: %s\n' "$#" "$*"
+$ ./set-args a b c d e      # I named the script set-args.
+5 args: a b c d e
+3 args: foo bar baz
+
+------------------------------------------------
+#What is PS1
+Prompt String (Specifier) 1
+Changes the prompt.
+export PS1='\u@\h \w> '
+changes the prompt to:
+grawat@x-host ~> 
+
+------------------------------------------------
+#How would you list a file with leading -
+ls -- -<filename>
+ls -- -my_file
+
+
+------------------------------------------------
+#What happens when you run ls -l
+
+What is the shell doing here?
+|-> Stores input into buffer: The shell uses the function getline() to read a line from standard input (from the command line) and stores it into a buffer.
+|-> Tokenizes the input: The shell then uses the function strtok() to separate (tokenize), the individual words, separated by a space (delimiter).
+|-> Checks for aliases: The shell checks if an alias is being used. An alias for for ls -l would be ll. When this happens, shell will replace the alias with the full command.
+|-> Checks for built-in programs: The shell looks at the first word of the command, and if the program is contained within the shell itself (buit-in program, not an executable), it will run the built-in directly.
+|-> Search for command using PATH: The shell will then look for the command using PATH if the command is not a built-in.
+|-> Get child process of command: The shell will use the system call fork()to create a child process, so that upon exiting the command process, we can get back to the shell. The shell also uses the system call wait() to wait until the command process is complete before exiting back to the command prompt of the shell.
+|-> Run command using absolute path: The absolute path of ls is /bin/ls, as describes earlier. If the program is executable, then the shell will use the system call execve() to run/execute the program in the child process.
+|-> Command prompt appears: It’s done! The environmental variable called “Prompt String One” (PS1) is the command prompt of the shell. This appears after the command process is over.
